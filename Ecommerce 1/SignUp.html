@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+
+    <style>
+        form{
+            margin: auto;
+            margin-top: 30px;
+            border: 0px solid black;
+            width: 27%;
+            font-size: 18px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+        }
+        input{
+            width: 97%;
+            border: 1px solid;
+            height: 40px;
+            border-radius: 8px;
+            border-color: gray;
+            margin-bottom: 30px;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+        h3{
+            text-align: center;
+            margin-top: 0px;
+            margin-bottom: 40px;
+        }
+        label{
+            display: block;
+            margin-bottom: -10px;
+        }
+        button{
+            width: 95%;
+            display: block;
+            margin: auto;
+            height: 45px;
+            font-size: 20px;
+            font-weight: bold;
+            border: 0px;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <form action="">
+        <h3>Sign Up</h3>
+        <label for="">Full name</label><br>
+        <input type="text" placeholder="Enter your name" id="name"><br>
+        <label for="">Email</label><br>
+        <input type="email" placeholder="Enter email" id="email"><br>
+        <label for="">Password</label><br>
+        <input type="password" placeholder="Enter password" id="pass">
+        <button>Sign Up</button>
+        <p>Already have an account?
+            <a href="logIn.html">Sign In</a></p>
+    </form>
+    
+</body>
+</html>
+
+<script>
+    let form = document.querySelector("form")
+    form.addEventListener("submit", signUp)
+
+    let signArr = JSON.parse(localStorage.getItem("signupData")) || [];
+
+    function signUp(event){
+        // event.preventDefault();
+        let signObj = {
+            Name:form.name.value,
+            Email:form.email.value,
+            Pass:form.pass.value
+        }
+        if(checkEmail(signObj.Email)===true){
+            signArr.push(signObj);
+            localStorage.setItem("signupData", JSON.stringify(signArr))
+            alert("Account has been created successfully")
+        }else{
+            alert("This account is already exist")
+        }
+        
+    }
+
+    function checkEmail(email){
+        let filtered = signArr.filter(function(elem){
+            return email === elem.Email;
+        })
+        if(filtered.length > 0){
+            return false;
+        }else{
+            return true
+        }
+    }
+</script>

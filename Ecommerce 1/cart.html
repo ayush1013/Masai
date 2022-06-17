@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #container{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        grid-template-rows: auto;
+        gap: 40px;
+      }
+      #nav{
+          width: 100%;
+          height: auto;
+          margin-bottom: 50px;
+      }
+      #nav>div{
+          display: flex;
+          margin-right: 200px;
+      }
+      #nav>div>h1{
+          margin-right: 5px;
+      }
+      h2{
+          margin-top: 27px;
+      }
+      #promoPrice{
+          display: flex;
+      }
+      #promoPrice>h1{
+          margin-right: 5px;
+      }
+    </style>
+
+</head>
+<body>
+    <div id="nav">
+        <div id="item">
+            <h1>Total Item Added -</h1>
+            <h2></h2>
+        </div>
+        <div id="price">
+            <h1>Total Cart Price -</h1>
+            <h2></h2>
+        </div>
+    </div>
+    <input type="text" id="promo" placeholder="Apply Promo Code Here">
+    <button>Apply Promo</button><br>
+    <div id="promoPrice">
+        <h1>Promo Dis. Price -</h1>
+        <h2></h2>
+    </div>
+    <div id="container">
+    </div>
+</body>
+</html>
+
+<script>
+    let cartFromLS = JSON.parse(localStorage.getItem("storedInCart")) || [];
+    let total = 0;
+    let count = 0;
+    cartFromLS.forEach(function(elem){
+        let image =  document.createElement("img")
+        image.setAttribute("src",elem.image_url)
+        let Name = document.createElement("p")
+        Name.innerText = elem.name
+        let Price = document.createElement("p")
+        Price.innerText = elem.price
+        let OffPrice = document.createElement("p")
+        OffPrice.innerText = elem.strikedoffprice
+       
+        let box = document.createElement("div")
+        box.append(image,Name,Price,OffPrice)
+        document.querySelector("#container").append(box)
+
+        count++
+        total=total+Number(elem.price)
+    })
+    let totalCart = document.querySelector("#nav>#price>h2")
+    totalCart.innerText = "₹"+total
+    let dis = (total/100)*30;
+
+    let totalItem = document.querySelector("#nav>#item>h2")
+    totalItem.innerText = count
+
+    let disPrice = document.querySelector("#promoPrice>h2")
+    
+    
+    document.querySelector("button").addEventListener("click",ApplyPromo)
+    
+    function ApplyPromo(){
+        event.preventDefault();
+        let promo = document.querySelector("#promo").value;
+        if(promo === "masai30"){
+            disPrice.innerText = total-dis;
+            disPrice.style.color = "green"
+            totalCart.style.color = "red"
+        }
+    }
+
+</script>
