@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #container{
+            display: grid;
+            grid-template-columns: repeat(2,200px);
+            grid-template-rows: auto;
+        }
+        #container>div{
+            width: 80px;
+            height: 50px;
+            margin-bottom: 40px;
+            margin-left: 50px;
+            text-align: center;
+            font-size: 30px;
+            text-align: center;
+            box-sizing: border-box;
+            padding-top: 5px;
+            color: black;
+        }
+        #container>#winner{
+            border: 2px solid black;
+            width: 200px;
+           
+        }
+        #member-1{
+            border: 2px solid black;
+        }
+        #member-2{
+            border: 2px solid black;
+        }
+        #member-3{
+            border: 2px solid black;
+        }
+        #roll{
+            border: 2px solid rgb(44, 2, 44);
+            border-radius: 25px;
+            width: 150px;
+            height: 50px;
+            margin-left: 125px;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="container">
+        <h1>Winner</h1>
+        <div id="winner"></div>
+        <h2>Member 'A' Score</h2>
+        <div id="member-1"></div>
+        <h2>Member 'B' Score</h2>
+        <div id="member-2"></div>
+        <h2>Member 'C' Score</h2>
+        <div id="member-3"></div>
+    </div>
+    <button id="roll">ROLL THE DICE</button>
+</body>
+</html>
+
+<script>
+    
+    var dice = {
+        dots: 6,
+        roll: function (){
+            var randomNumber = Math.floor(Math.random()*this.dots) +1;
+            return randomNumber
+        }
+    }
+
+    function createRandom1(number){
+        var member1 = document.querySelector("#member-1");
+        member1.innerHTML = number;
+    }
+    function createRandom2(number){
+        var member2 = document.querySelector("#member-2");
+        member2.innerHTML = number;
+    }
+    function createRandom3(number){
+        var member3 = document.querySelector("#member-3");
+        member3.innerHTML = number;
+    }
+
+    document.querySelector("#roll").addEventListener("click", function(){
+        rollDice1();
+        rollDice2();
+        rollDice3();
+
+        var A = document.querySelector("#member-1");
+        var B = document.querySelector("#member-2");
+        var C = document.querySelector("#member-3");
+        var W = document.querySelector("#winner");
+
+        if(A.innerHTML>B.innerHTML && A.innerHTML>C.innerHTML){
+            W.innerHTML = "Member A";
+            W.style.backgroundColor = "blue"
+        }else if(B.innerHTML>A.innerHTML && B.innerHTML>C.innerHTML){
+            W.innerHTML = "Member B";
+            W.style.backgroundColor = "blue"
+        }else{
+            W.innerHTML = "Member C";
+            W.style.backgroundColor = "blue"
+        }
+
+        
+        if(A.innerHTML>B.innerHTML && A.innerHTML>C.innerHTML){
+            A.style.backgroundColor = "green"
+        }else if(A.innerHTML==B.innerHTML){
+            A.style.backgroundColor = "blue"
+            B.style.backgroundColor = "blue"
+        }else if(A.innerHTML==C.innerHTML){
+            A.style.backgroundColor = "blue"
+            C.style.backgroundColor = "blue"
+        }else if(A.innerHTML>B.innerHTML || A.innerHTML>C.innerHTML){
+            A.style.backgroundColor = "yellow"
+        }else{
+            A.style.backgroundColor = "red"
+        }
+        
+        if(B.innerHTML>A.innerHTML && B.innerHTML>C.innerHTML){
+            B.style.backgroundColor = "green"
+        }else if(B.innerHTML==A.innerHTML){
+            B.style.backgroundColor = "blue"
+            A.style.backgroundColor = "blue"
+        }else if(B.innerHTML==C.innerHTML){
+            B.style.backgroundColor = "blue"
+            C.style.backgroundColor = "blue"
+        }else if(B.innerHTML>A.innerHTML || B.innerHTML>C.innerHTML){
+            B.style.backgroundColor = "yellow"
+        }else{
+            B.style.backgroundColor = "red"
+        }
+        
+        if(C.innerHTML>A.innerHTML && C.innerHTML>B.innerHTML){
+            C.style.backgroundColor = "green"
+        }else if(C.innerHTML==A.innerHTML){
+            C.style.backgroundColor = "blue"
+            A.style.backgroundColor = "blue"
+        }else if(C.innerHTML==B.innerHTML){
+            C.style.backgroundColor = "blue"
+            B.style.backgroundColor = "blue"
+        }else if(C.innerHTML>A.innerHTML || C.innerHTML>B.innerHTML){
+            C.style.backgroundColor = "yellow"
+        }else{
+            C.style.backgroundColor = "red"
+        }
+
+    });
+
+    function rollDice1(){
+        var result = dice.roll();
+        createRandom1(result)
+    }
+
+    function rollDice2(){
+        var result = dice.roll();
+        createRandom2(result)
+    }
+
+    function rollDice3(){
+        var result = dice.roll();
+        createRandom3(result)
+    }
+
+    
+</script>
