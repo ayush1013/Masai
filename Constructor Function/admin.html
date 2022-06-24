@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #form>input{
+            margin-bottom: 20px;
+        }
+        #form>select{
+            margin-bottom: 20px;
+        }
+    </style>
+
+</head>
+<body>
+    <form id="form" >
+        <input type="text" id="name" placeholder="Product Name"><br>
+        <input type="text" placeholder="Category" id="category"><br>
+        <input type="text" placeholder="Image Url" id="image"><br>
+        <select id="gender">
+            <option value="">Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select><br>
+        <input type="text" placeholder="sold" id="sold"><br>
+        <input type="submit" id="add">
+    </form>
+</body>
+</html>
+
+<script>
+
+    let ProductArr = JSON.parse(localStorage.getItem("Products")) || [];
+    let form = document.querySelector("#form")
+    form.addEventListener("submit", MakeObj)
+
+    function MakeObj(event){
+        // event.preventDefault();
+
+        let name = form.name.value;
+        let category = form.category.value;
+        let image = form.image.value;
+        let gender = form.gender.value;
+        let sold = form.sold.value;
+        if(sold===""){
+            sold = "false";
+        }
+
+        let product = new AllProducts(name,category,image,gender,sold)
+        // console.log(product);
+
+        ProductArr.push(product)
+        // console.log(ProductArr);
+        localStorage.setItem("Products", JSON.stringify(ProductArr));
+
+    }
+
+    function AllProducts (name,cat,img,gdr,sold){
+        this.Name = name;
+        this.Category = cat;
+        this.Image = img;
+        this.Gender = gdr;
+        this.Sold = sold;
+    }
+
+</script>

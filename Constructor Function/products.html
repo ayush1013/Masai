@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+
+    <style>
+        #container{
+            width: 80%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(4,22%);
+            grid-template-rows: auto;
+            justify-content: space-between;
+        }
+        .product{
+            margin-bottom: 50px;
+        }
+        .product>img{
+            width: 100%;
+        }
+        .product>div:nth-child(2){
+            height: 170px;
+        }
+        .product>div:last-child{
+            display: flex;
+            justify-content: space-around;
+        }
+        .product button{
+            width: 100px;
+            height: 40px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        #counter{
+            display: flex;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="counter">
+        <h1>Total Items</h1>
+        <h1></h1>
+    </div>
+    <div id="container">
+
+    </div>
+</body>
+</html>
+
+<script>
+
+    let ProductArr = JSON.parse(localStorage.getItem("Products")) || [];
+    let count = 0;
+    ProductArr.forEach(function(elem,index){
+        let image = document.createElement("img");
+        image.setAttribute("src",elem.Image);
+        let name = document.createElement("h3");
+        name.innerHTML = elem.Name;
+        let category = document.createElement("h4");
+        category.innerHTML = elem.Category;
+        let gender = document.createElement("h4");
+        gender.innerHTML = elem.Gender;
+
+        let innerDataBox = document.createElement("div");
+        innerDataBox.append(name,category,gender)
+
+        let Remove = document.createElement("button");
+        Remove.innerHTML = "Remove";
+
+        Remove.addEventListener("click",function(){
+            event.target.parentNode.remove();
+            removeData(index)
+        })
+
+        let Sold = document.createElement("button");
+        Sold.innerHTML = "Sold";
+
+        Sold.addEventListener("click",changeColor)
+        
+        function changeColor(){
+            if(elem.Sold==="false"){
+                elem.Sold ="true"
+                Sold.style.backgroundColor = "red"
+            }else if(elem.Sold==="true"){
+                elem.Sold = "false"
+                Sold.style.backgroundColor = "green"
+            }
+        }
+
+        let buttonBox = document.createElement("div");
+        buttonBox.append(Remove,Sold)
+        
+        count++
+
+        let div = document.createElement("div");
+        div.setAttribute("class","product")
+
+        div.append(image,innerDataBox,buttonBox)
+
+        document.querySelector("#container").append(div);
+    })
+
+    let counter = document.querySelector("#counter>h1+h1");
+    counter.innerHTML = count;
+
+    function removeData(index){
+        ProductArr.splice(index,1);
+        localStorage.setItem("Products", JSON.stringify(ProductArr));
+        window.location.reload();
+    }
+
+</script>
