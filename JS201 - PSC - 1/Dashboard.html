@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <style>
+        #container{
+            width: 90%;
+            display: grid;
+            margin: auto;
+            margin-top: 60px;
+            grid-template-columns: repeat(4,21%);
+            grid-template-rows: auto;
+            justify-content: space-between;
+
+        }
+        #container>div{
+            border-radius: 5px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            padding: 2%;
+            margin-bottom: 60px;
+        }
+        #container>div>div{
+            display: flex;
+            /* border: 1px solid red; */
+            justify-content: space-between;
+            
+        }
+        #container>div>button{
+            font-size: 12px;
+            width: 100px;
+            display: block;
+            margin: auto;
+            margin-top: 20px;
+        }
+        #container>div>div>img{
+            border: 1px solid gray;
+            width: 40%;
+            height: 43%;
+            padding-bottom: 2%;
+        }#container>div>div>div>h4{
+            margin-top: 0px;
+        }
+        #nav{
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+        #nav>h1{
+            text-align: center;
+        }
+        #nav>div{
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-content: center;
+            font-size: 14px;
+        }
+        #nav>div>div{
+            padding: 0px 25px 0px 25px;
+            height: 28px;
+            margin-top: 13px;
+            border: 1px solid black;
+            font-size: 25px;
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div id="nav">
+            <h1>STUDENTS FROM</h1>
+        <div>
+            <h2>FT Web-15 -</h2>
+            <div id="W15"></div>
+            <h2>FT Web-16 -</h2>
+            <div id="W16"></div>
+            <h2>FT Web-17 -</h2>
+            <div id="W17"></div>
+            <h2>FT Web-18 -</h2>
+            <div id="W18"></div>
+            <h2>FT Web-19 -</h2>
+            <div id="W19"></div>
+            <h2>FT Web-20 -</h2>
+            <div id="W20"></div>
+        </div>
+    </div>
+    <div id="container">
+        
+    </div>
+</body>
+</html>
+
+<script>
+    let studentArr = JSON.parse(localStorage.getItem("addedStudent")) || [];
+
+    let TrashArr = JSON.parse(localStorage.getItem("trash")) || [];
+    let count15 = 0;
+    let count16 = 0;
+    let count17 = 0;
+    let count18 = 0;
+    let count19 = 0;
+    let count20 = 0;
+    studentArr.forEach(function (elem,index){
+        let name = document.createElement("h4"); 
+        name.innerHTML = elem.name;
+        let course = document.createElement("h5"); 
+        course.innerHTML = elem.course;
+        let unit = document.createElement("h5"); 
+        unit.innerHTML = elem.unit;
+        let batch = document.createElement("h5"); 
+        batch.innerHTML = elem.batch;
+
+        if(batch.innerHTML=="FT Web-15"){
+            count15++
+        }else if(batch.innerHTML=="FT Web-16"){
+            count16++
+        }else if(batch.innerHTML=="FT Web-17"){
+            count17++
+        }else if(batch.innerHTML=="FT Web-18"){
+            count18++
+        }else if(batch.innerHTML=="FT Web-19"){
+            count19++
+        }else if(batch.innerHTML=="FT Web-20"){
+            count20++
+        }
+
+        let nameDiv = document.createElement("div");
+        nameDiv.append(name,course,unit,batch) 
+
+        let image = document.createElement("img"); 
+        image.setAttribute("src",elem.image)
+
+        let studentDiv = document.createElement("div");
+        studentDiv.append(nameDiv,image);
+
+        let removeButton = document.createElement("button");
+        removeButton.innerHTML = "Remove"
+
+        removeButton.addEventListener("click", function(){
+            addDataInTrash(elem)
+            removeData(index)
+        })
+
+        let AllData = document.createElement("div");
+        AllData.append(studentDiv,removeButton);
+
+        document.querySelector("#container").append(AllData);
+    })
+
+    document.querySelector("#W15").innerHTML = count15;
+    document.querySelector("#W16").innerHTML = count16;
+    document.querySelector("#W17").innerHTML = count17;
+    document.querySelector("#W18").innerHTML = count18;
+    document.querySelector("#W19").innerHTML = count19;
+    document.querySelector("#W20").innerHTML = count20;
+
+
+    function addDataInTrash(elem){
+        TrashArr.push(elem);
+        localStorage.setItem("trash", JSON.stringify(TrashArr));
+    }
+
+    function removeData(index){
+        studentArr.splice(index,1);
+        localStorage.setItem("addedStudent", JSON.stringify(studentArr));
+        window.location.reload();
+    }
+</script>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        #masai>input{
+            margin-bottom: 20px;
+            height: 30px;
+            padding-left: 20px;
+        }
+        #masai>select{
+            width: 195px;
+            margin-bottom: 20px;
+            height: 35px;
+            padding-left: 20px;
+        }
+        #masai>input:last-child{
+            padding-right: 20px;
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1><a href="Dashboard.html">Dashboard</a></h1>
+    <form id="masai">
+        <input type="text" id="name" placeholder="Name"><br>
+        <input type="text" id="course" placeholder="Course"><br>
+        <input type="text" id="unit" placeholder="Unit"><br>
+        <select id="batch">
+            <option value="">Select Batch</option>
+            <option value="FT Web-15">FT Web-15</option>
+            <option value="FT Web-16">FT Web-16</option>
+            <option value="FT Web-17">FT Web-17</option>
+            <option value="FT Web-18">FT Web-18</option>
+            <option value="FT Web-19">FT Web-19</option>
+            <option value="FT Web-20">FT Web-20</option>
+        </select><br>
+        <input type="text" id="image" placeholder="Image"><br>
+        <input type="submit">
+    </form>
+</body>
+</html>
+
+<script>
+    let studentArr = JSON.parse(localStorage.getItem("addedStudent")) || [];
+    let form = document.querySelector("#masai");
+    form.addEventListener("submit",MasaiData)
+
+    function MasaiData(){
+        // event.preventDefault();
+        let name = form.name.value;
+        let course = form.course.value;
+        let unit = form.unit.value;
+        let batch = form.batch.value;
+        let image = form.image.value;
+        
+
+        let studentObj= new addData(name,course,unit,batch,image);
+        
+        studentArr.push(studentObj);
+        // console.log(studentArr)
+        localStorage.setItem("addedStudent", JSON.stringify(studentArr));
+    }
+    
+    function addData(n,c,u,b,i){
+            this.name = n;
+            this.course = c;
+            this.unit = u;
+            this.batch = b
+            this.image = i;
+        }
+</script>
